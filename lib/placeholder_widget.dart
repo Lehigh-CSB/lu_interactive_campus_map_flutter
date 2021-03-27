@@ -1,3 +1,5 @@
+// just a temporary widget that works as a placeholder
+
 import 'package:flutter/material.dart';
 
 class PlaceholderWidget extends StatelessWidget {

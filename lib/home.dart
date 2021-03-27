@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:lu_interactive_campus_map_flutter/app_icons.dart';
 import 'placeholder_widget.dart';
 
+// main color pallete
 var colorGryphonGold = "FBDE40";
 var colorLehighBrown = "653818";
 var colorPackerPatina = "6BBBAE";
 var colorBetterThanMaroonRed = "F9423A";
 
-class Map extends StatefulWidget {
+// creates a Stateful Widget
+class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _MapState();
+    return _HomeState();
   }
 }
 
-class _MapState extends State<Map> {
+// provides a state for the app
+class _HomeState extends State<Home> {
   int _currentIndex = 1;
   String _currentTitle = 'Map';
   final List<Widget> _children = [
-    PlaceholderWidget(Text('Feed')),
-    PlaceholderWidget(Text('Map')),
-    PlaceholderWidget(Text('Discover')),
+    PlaceholderWidget(Text('Feed')), // TODO: add Feed widget
+    PlaceholderWidget(Text('Map')), // TODO: add Map widget
+    PlaceholderWidget(Text('Discover')), // TODO: add Discover widget
   ];
 
   @override
@@ -61,6 +64,9 @@ class _MapState extends State<Map> {
     );
   }
 
+/* method that called when user taps on the BottomNavigationBarItem
+  * changes the properties of the items when pressed
+*/
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
