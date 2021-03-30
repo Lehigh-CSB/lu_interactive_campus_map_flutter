@@ -1,0 +1,15 @@
+# Customize the codemagic.yaml file according to your project and commit it to the root of your repository
+# Check out https://docs.codemagic.io/getting-started/yaml/ for more information
+# You can also download your configuration from Worklow Editor to get started
+
+workflows:
+  example-workflow:
+    name: iOS Workflow
+    instance_type: mac_mini
+    scripts:
+      - name: Build for iOS
+        script: flutter build ios
+    publishing:
+      email:
+        recipients:
+          - abekek01@gmail.com
