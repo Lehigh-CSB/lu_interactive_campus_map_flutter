@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lu_interactive_campus_map_flutter/app_icons.dart';
 import 'placeholder_widget.dart';
+import 'map.dart';
 
 // main color pallete
 var colorGryphonGold = "FBDE40";
@@ -22,7 +23,7 @@ class _HomeState extends State<Home> {
   String _currentTitle = 'Map';
   final List<Widget> _children = [
     PlaceholderWidget(Text('Feed')), // TODO: add Feed widget
-    PlaceholderWidget(Text('Map')), // TODO: add Map widget
+    Map(),
     PlaceholderWidget(Text('Discover')), // TODO: add Discover widget
   ];
 
@@ -37,7 +38,10 @@ class _HomeState extends State<Home> {
         )),
         backgroundColor: Colors.white,
       ),
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _children,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         onTap: onTabTapped,
