@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "880829570394",
+    "firebase_url": "https://lu-interactive-campus-map-default-rtdb.firebaseio.com",
+    "project_id": "lu-interactive-campus-map",
+    "storage_bucket": "lu-interactive-campus-map.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880829570394:android:d89a6665d2352bc789a763",
+        "android_client_info": {
+          "package_name": "com.example.lu_interactive_campus_map_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880829570394-0suhq3r3h9krakqm9itjs07c8moe7h6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2hjmMIwGieeFTPgJXKfAaQnx5RGICftE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880829570394-0suhq3r3h9krakqm9itjs07c8moe7h6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
