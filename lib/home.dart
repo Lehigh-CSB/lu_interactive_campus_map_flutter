@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lu_interactive_campus_map_flutter/app_icons.dart';
 import 'placeholder_widget.dart';
 import 'map.dart';
+import 'feed.dart';
 
 // main color pallete
 var colorGryphonGold = "FBDE40";
@@ -22,7 +23,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 1;
   String _currentTitle = 'Map';
   final List<Widget> _children = [
-    PlaceholderWidget(Text('Feed')), // TODO: add Feed widget
+    Feed(), // TODO: add Feed widget
     Map(),
     PlaceholderWidget(Text('Discover')), // TODO: add Discover widget
   ];
