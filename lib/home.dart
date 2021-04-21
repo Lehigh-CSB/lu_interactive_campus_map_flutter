@@ -54,15 +54,15 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
             icon: new Icon(AppIcons.feed_icon),
-            title: new Text('Feed'),
+            label: 'Feed',
           ),
           BottomNavigationBarItem(
             icon: new Icon(AppIcons.map_icon),
-            title: new Text('Map'),
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: new Icon(AppIcons.discover_icon),
-            title: new Text('Discover'),
+            label: 'Discover',
           )
         ],
       ),
