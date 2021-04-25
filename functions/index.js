@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 // const axios = require('axios');
 
-exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 5 minutes")
+exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 12 hours")
     .timeZone("America/New_York").onRun(async (context) => {
         
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
