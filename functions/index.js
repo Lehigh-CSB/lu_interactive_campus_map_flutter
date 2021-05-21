@@ -12,7 +12,7 @@ const options = {
 const geocoder = NodeGeocoder(options);
 
 
-exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 2 minutes")
+exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 12 hours")
     .timeZone("America/New_York").onRun(async (context) => {
         
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
