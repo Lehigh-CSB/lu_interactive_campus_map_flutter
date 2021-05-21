@@ -2,9 +2,17 @@ const functions = require('firebase-functions');
 const puppeteer = require("puppeteer");
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
-// const axios = require('axios');
+const NodeGeocoder = require('node-geocoder');
 
-exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 12 hours")
+const options = {
+  provider: 'google',
+  apiKey: process.env.GEOCODING_API_KEY,
+};
+
+const geocoder = NodeGeocoder(options);
+
+
+exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pubsub.schedule("every 2 minutes")
     .timeZone("America/New_York").onRun(async (context) => {
         
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
@@ -62,37 +70,59 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
 
             const data_full = await page_event.evaluate((data) => {
               let events_full = [];
-              let address = 'Virtual';
+              let address = '';
               if(data[i].location != 'Virtual Event' || data[i].location != ''){
                   address = document.querySelector('.location');
               }
               let full_description = document.querySelector('.description').textContent;
 
-              if(address == null){
+              if(address == '' || address == null){
                 events_full.push({
-                    address: '',
+                    address: 'Lehigh University',
                     full_description: full_description.replace(/(\r\n|\n|\r)/gm, "").replace(/^\s+|\s+$/g, '').replace(/\t+/g,'')
-                })
+                });
               }
               else{
                 events_full.push({
                     address: address.textContent.replace(/(\r\n|\n|\r)/gm, "").replace(/^\s+|\s+$/g, '').replace(/\t+/g,''),
                     full_description: full_description.replace(/(\r\n|\n|\r)/gm, "").replace(/^\s+|\s+$/g, '').replace(/\t+/g,'')
-                })
+                });
               }
               return events_full;
             }, data);
 
-            admin.database().ref("events/event_" + i).set({
-              "title": data[i].title,
-              "description": data[i].description,
-              "date": data[i].date,
-              "location": data[i].location,
-              "img_url": data[i].img_url,
-              "event_url": data[i].event_url,
-              "address": data_full[0].address,
-              "full_description": data_full[0].full_description,
-            });
+            if(data_full[0].address != ''){
+              console.log(data_full[0].address);
+              const res = geocoder.geocode({address: data[i].location, zipcode: '18015'});
+              res.then((result) => {
+                admin.database().ref("events/event_" + i).set({
+                  "title": data[i].title,
+                  "description": data[i].description,
+                  "date": data[i].date,
+                  "location": data[i].location,
+                  "img_url": data[i].img_url,
+                  "event_url": data[i].event_url,
+                  "address": data_full[0].address,
+                  "full_description": data_full[0].full_description,
+                  'latitude': result[0].latitude,
+                  'longitude': result[0].longitude,
+                });
+              });
+            }
+            else{
+              admin.database().ref("events/event_" + i).set({
+                "title": data[i].title,
+                "description": data[i].description,
+                "date": data[i].date,
+                "location": data[i].location,
+                "img_url": data[i].img_url,
+                "event_url": data[i].event_url,
+                "address": data_full[0].address,
+                "full_description": data_full[0].full_description,
+                'latitude': '40.6048687',
+                'longitude': '-75.3775187',
+              });
+            }
 
             console.log('Writing to the database of event #' + i + ' is complete!');
         }
