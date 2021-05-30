@@ -8,13 +8,12 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
-
   @override
   Widget build(BuildContext context) {
-    return _buildMap();
+    return _addMarkers();
   }
 
-  Widget _buildMap() {
+  Widget _addMarkers() {
     return StreamBuilder(
         stream: FirebaseDatabase().reference().child('events').onValue,
         builder: (context, snapshot) {
@@ -36,8 +35,7 @@ class _MapState extends State<Map> {
                 longitude = double.parse(currentEvent['longitude']);
               markers.add(new Marker(
                   markerId: MarkerId(currentEvent['title']),
-                  position: LatLng(
-                  latitude, longitude),
+                  position: LatLng(latitude, longitude),
                   consumeTapEvents: true,
                   infoWindow: InfoWindow(
                     title: currentEvent['title'],
@@ -48,45 +46,47 @@ class _MapState extends State<Map> {
                   }));
             }
           }
-
-          return Scaffold(
-            body: PlatformMap(
-              initialCameraPosition: CameraPosition(
-                target: const LatLng(40.6058825381345, -75.37786957033981),
-                zoom: 16.0,
-              ),
-              markers: Set<Marker>.of(markers),
-              mapType: MapType.hybrid,
-              onTap: (location) => print('onTap: $location'),
-              onCameraMove: (cameraUpdate) =>
-                  print('onCameraMove: $cameraUpdate'),
-              compassEnabled: true,
-              onMapCreated: (controller) {
-                Future.delayed(Duration(seconds: 2)).then((_) {
-                  controller.animateCamera(
-                    CameraUpdate.newCameraPosition(
-                      const CameraPosition(
-                        bearing: 0.0,
-                        target: LatLng(40.6058825381345, -75.37786957033981),
-                        tilt: 0.0,
-                        zoom: 18,
-                      ),
-                    ),
-                  );
-                  // TODO: add map bounds
-                  // controller.animateCamera(
-                  //   CameraUpdate.newLatLngBounds(
-                  //     LatLngBounds(
-                  //       southwest: LatLng(40.57213086648479, -75.41696873071834),
-                  //       northeast: LatLng(40.61721342747275, -75.35184091722228)),
-                  //   1));
-                  controller
-                      .getVisibleRegion()
-                      .then((bounds) => print('bounds: ${bounds.toString()}'));
-                });
-              },
-            ),
-          );
+          return _buildMap(markers);
         });
+  }
+
+  Widget _buildMap(List<Marker> markers) {
+    return Scaffold(
+      body: PlatformMap(
+        initialCameraPosition: CameraPosition(
+          target: const LatLng(40.6058825381345, -75.37786957033981),
+          zoom: 16.0,
+        ),
+        markers: Set<Marker>.of(markers),
+        mapType: MapType.normal,
+        onTap: (location) => print('onTap: $location'),
+        onCameraMove: (cameraUpdate) => print('onCameraMove: $cameraUpdate'),
+        compassEnabled: true,
+        onMapCreated: (controller) {
+          Future.delayed(Duration(seconds: 2)).then((_) {
+            controller.animateCamera(
+              CameraUpdate.newCameraPosition(
+                const CameraPosition(
+                  bearing: 0.0,
+                  target: LatLng(40.6058825381345, -75.37786957033981),
+                  tilt: 0.0,
+                  zoom: 18,
+                ),
+              ),
+            );
+            // TODO: add map bounds
+            // controller.animateCamera(
+            //   CameraUpdate.newLatLngBounds(
+            //     LatLngBounds(
+            //       southwest: LatLng(40.57213086648479, -75.41696873071834),
+            //       northeast: LatLng(40.61721342747275, -75.35184091722228)),
+            //   1));
+            controller
+                .getVisibleRegion()
+                .then((bounds) => print('bounds: ${bounds.toString()}'));
+          });
+        },
+      ),
+    );
   }
 }
