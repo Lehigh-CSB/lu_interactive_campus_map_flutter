@@ -18,7 +18,7 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0);
-        await page.goto("https://eventscalendar.lehigh.edu/calendar/");
+        await page.goto("https://eventscalendar.lehigh.edu/calendar/upcoming/");
 
         const data = await page.evaluate(() => {
             let events = []
@@ -91,8 +91,8 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
               return events_full;
             }, data);
 
-            if(data_full[0].address != ''){
-              console.log(data_full[0].address);
+            if(data[i].location != 'Virtual Event'){
+              console.log(data[i].location);
               const res = geocoder.geocode({address: data[i].location, zipcode: '18015'});
               res.then((result) => {
                 admin.database().ref("events/event_" + i).set({
@@ -102,7 +102,6 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
                   "location": data[i].location,
                   "img_url": data[i].img_url,
                   "event_url": data[i].event_url,
-                  "address": data_full[0].address,
                   "full_description": data_full[0].full_description,
                   'latitude': result[0].latitude,
                   'longitude': result[0].longitude,
@@ -117,10 +116,7 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
                 "location": data[i].location,
                 "img_url": data[i].img_url,
                 "event_url": data[i].event_url,
-                "address": data_full[0].address,
                 "full_description": data_full[0].full_description,
-                'latitude': '40.6048687',
-                'longitude': '-75.3775187',
               });
             }
 
