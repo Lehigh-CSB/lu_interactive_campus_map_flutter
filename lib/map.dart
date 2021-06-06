@@ -20,11 +20,13 @@ class _MapState extends State<Map> {
           if (!snapshot.hasData) return Text('Loading Maps.. Please wait');
           List<Marker> markers = [];
 
-          for (int i = 0; i < 65; i++) {
+          for (int i = 0; i < 113; i++) {
             if (snapshot.data.snapshot.value['event_' + i.toString()] != null) {
               var currentEvent =
                   snapshot.data.snapshot.value['event_' + i.toString()];
               double latitude, longitude;
+              if(currentEvent['latitude'] == null)
+                continue;
               if (currentEvent['latitude'] is double)
                 latitude = currentEvent['latitude'];
               else

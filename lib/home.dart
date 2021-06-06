@@ -37,6 +37,17 @@ class _HomeState extends State<Home> {
           _currentTitle,
           style: TextStyle(color: Colors.black),
         )),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // do something
+            },
+          ),
+        ],
         backgroundColor: Colors.white,
       ),
       body: IndexedStack(
