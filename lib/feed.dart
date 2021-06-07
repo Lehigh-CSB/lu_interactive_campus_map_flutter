@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,28 +9,32 @@ class Feed extends StatefulWidget {
 
 // See for formatting help: https://flutter.dev/docs/development/ui/layout
 class _FeedState extends State<Feed> {
-  final _titles = [];
   @override
   Widget build(BuildContext context) {
     return _buildFeed();
   }
 
   Widget _buildFeed() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Divider();
+    return StreamBuilder(
+        stream: FirebaseDatabase().reference().child('events').onValue,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) return  Text('Loading events...');
 
-          final index = i ~/ 2;
-
-          // builds placeholders (real app pulls feed data from Firebase)
-          if (index < 8) {
-            if (index >= _titles.length) {
-              _titles.add('New Row');
-            }
-            return _buildRow(_titles[index]);
-          }
-          return new Container(); // empty space
+          return ListView.separated(
+              padding: EdgeInsets.all(16.0),
+              itemCount: snapshot.data.snapshot.value.length,
+              itemBuilder: (context, index) {
+                if (snapshot.data.snapshot.value['event_' + index.toString()]
+                    != null) {
+                  var currentEvent =
+                      snapshot.data.snapshot.value['event_' + index.toString()];
+                  return _buildRow(currentEvent['title']);
+                }
+                else
+                  return SizedBox(); // better approach is to filter data first
+              },
+              separatorBuilder: (context, index) => const Divider(),
+          );
         }
     );
   }
