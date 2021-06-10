@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _FeedState extends State<Feed> {
                     != null) {
                   var currentEvent =
                       snapshot.data.snapshot.value['event_' + index.toString()];
-                  return _buildRow(currentEvent['title']);
+                  return _buildRow(currentEvent);
                 }
                 else
                   return SizedBox(); // better approach is to filter data first
@@ -39,15 +40,23 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  Widget _buildRow(String title) {
+  /* Event data:
+   * title
+   * date
+   * description
+   * full_description
+   * event_url
+   * img_url
+   * location
+   */
+
+  // TODO: add onTap behavior
+  Widget _buildRow(LinkedHashMap event) {
     return Card(
       child: ListTile(
-        leading: FlutterLogo(size: 72.0),
-        title: Text(title),
-        subtitle: Text(
-          'A sufficiently long subtitle warrants three lines.'
-        ),
-        trailing: Icon(Icons.more_vert),
+        leading: Image.network(event['img_url']),
+        title: Text(event['title']),
+        subtitle: Text(event['description']),
         isThreeLine: true,
       ),
     );
