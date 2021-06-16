@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 1;
   String _currentTitle = 'Map';
   final List<Widget> _children = [
-    Feed(), // TODO: add Feed widget
+    Feed(),
     Map(),
     PlaceholderWidget(Text('Discover')), // TODO: add Discover widget
   ];
