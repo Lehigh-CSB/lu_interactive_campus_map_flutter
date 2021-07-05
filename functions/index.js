@@ -93,20 +93,20 @@ exports.parseEvents = functions.runWith({memory: '4GB', timeoutSeconds: 539}).pu
 
             if(data[i].location != 'Virtual Event'){
               console.log(data[i].location);
-              const res = geocoder.geocode({address: data[i].location, zipcode: '18015'});
-              res.then((result) => {
+              (async function(){
+                const res = await geocoder.geocode({address: data[i].location, zipcode: '18015'});
                 admin.database().ref("events/event_" + i).set({
-                  "title": data[i].title,
-                  "description": data[i].description,
-                  "date": data[i].date,
-                  "location": data[i].location,
-                  "img_url": data[i].img_url,
-                  "event_url": data[i].event_url,
-                  "full_description": data_full[0].full_description,
-                  'latitude': result[0].latitude,
-                  'longitude': result[0].longitude,
-                });
-              });
+                      "title": data[i].title,
+                      "description": data[i].description,
+                      "date": data[i].date,
+                      "location": data[i].location,
+                      "img_url": data[i].img_url,
+                      "event_url": data[i].event_url,
+                      "full_description": data_full[0].full_description,
+                      'latitude': res[0].latitude,
+                      'longitude': res[0].longitude,
+                    });
+              })()
             }
             else{
               admin.database().ref("events/event_" + i).set({

@@ -10,9 +10,18 @@ const options = {
 
 const geocoder = NodeGeocoder(options);
 
-const res = geocoder.geocode({address: 'Linderman Library, Grand Reading Room'});
+// const res = geocoder.geocode({address: 'Linderman Library, Grand Reading Room'});
 
-res.then((result) => {
-    console.log(result[0].latitude);
-    console.log(result[0].longitude);
-});
+// res.then((result) => {
+//     console.log(result[0].latitude);
+//     console.log(result[0].longitude);
+// });
+
+// const res = geocoder.geocode({address: 'Linderman Library, Grand Reading Room'});
+
+var location = 'Linderman Library, Grand Reading Room';
+
+(async function(){
+    const res = await geocoder.geocode({address: location});
+    console.log(res)
+})()

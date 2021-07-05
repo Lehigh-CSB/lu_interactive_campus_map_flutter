@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+// import 'package:geocoder/geocoder.dart';
+// import 'package:geocoding/geocoding.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -12,6 +14,15 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     return _addMarkers();
   }
+
+  // List<Address> results = [];
+
+  // Future search(address) async {
+  //   var results = await Geocoder.local.findAddressesFromQuery(address);
+  //   this.setState(() {
+  //     this.results = results;
+  //   });
+  // }
 
   Widget _addMarkers() {
     return StreamBuilder(
