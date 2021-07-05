@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "880829570394-jqv51r2ifbohnm7c9p50kdemh7r01glf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lu_interactive_campus_map_flutter",
+            "certificate_hash": "86a12015c6320bd5491ea6adbe0fa1857c62d300"
+          }
+        },
+        {
           "client_id": "880829570394-0suhq3r3h9krakqm9itjs07c8moe7h6b.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "880829570394-0suhq3r3h9krakqm9itjs07c8moe7h6b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "880829570394-98o4tchdfsjtiibgg4b4jpq5efg4khth.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.luInteractiveCampusMapFlutter"
+              }
             }
           ]
         }
