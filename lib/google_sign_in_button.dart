@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:lu_interactive_campus_map_flutter/auth.dart';
 import 'package:lu_interactive_campus_map_flutter/home.dart';
+import 'package:lu_interactive_campus_map_flutter/user_profile_page.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 
     if (user != null) {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+          .pushReplacement(MaterialPageRoute(builder: (context) => UserInfoScreen(user: user,)));
     }
   }
 }

@@ -31,4 +31,25 @@ class Authentication {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  static Future<void> signOut({BuildContext context}) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      await googleSignIn.signOut();
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(Authentication.customSnackBar(content: 'Error signing out. Try again.'));
+    }
+  }
+
+  static SnackBar customSnackBar({String content}) {
+    return SnackBar(
+      backgroundColor: Colors.black,
+      content: Text(
+        content,
+        style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+      ),
+    );
+  }
 }
